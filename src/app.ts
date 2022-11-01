@@ -25,11 +25,19 @@ server.listen(port, hostname, () => {
   const pubKey = key.getPublicKeySecp256k1(false);
   const address = AnyAddress.createWithPublicKey(pubKey, CoinType.ethereum);
 
+  // Derive addresses using bip-44 paths
+  const key0 = wallet.getDerivedKey(CoinType.ethereum, 0, 0, 0);
+  const pubkey0 = key0.getPublicKeySecp256k1(false);
+  const address0 = AnyAddress.createWithPublicKey(pubkey0, CoinType.ethereum);
+
   console.log(`Create wallet: ${wallet.mnemonic()}`);
   console.log(`Get Ethereum public key: ${HexCoding.encode(pubKey.data())}`);
   console.log(`Get Ethereum address: ${address.description()}`);
   console.log(`CoinType.ethereum.value = ${CoinType.ethereum.value}`);
-  console.log('Ethereum protobuf models: \n', TW.Ethereum);
+  // console.log('Ethereum protobuf models: \n', TW.Ethereum);
+
+  console.log(`ETH address 0: ${address0.description()}`);
+  console.log(`ETH addresses match: ${address0.description() === address.description()}`)
 
   wallet.delete();
   key.delete();
