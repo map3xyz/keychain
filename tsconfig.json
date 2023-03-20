@@ -1,8 +1,9 @@
 {
   "extends": "./node_modules/gts/tsconfig-google.json",
   "compilerOptions": {
-    "skipLibCheck": true,
+    "noFallthroughCasesInSwitch": true,
     "rootDir": "src",
+    "skipLibCheck": true,
     "outDir": "dist"
   },
   "include": [

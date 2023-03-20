@@ -37,7 +37,9 @@ server.listen(port, hostname, () => {
   // console.log('Ethereum protobuf models: \n', TW.Ethereum);
 
   console.log(`ETH address 0: ${address0.description()}`);
-  console.log(`ETH addresses match: ${address0.description() === address.description()}`)
+  console.log(
+    `ETH addresses match: ${address0.description() === address.description()}`
+  );
 
   wallet.delete();
   key.delete();
