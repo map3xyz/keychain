@@ -1,19 +1,26 @@
-import {createServer, IncomingMessage, ServerResponse} from 'http';
-import {initWasm, TW} from '@trustwallet/wallet-core';
+import {initWasm} from '@trustwallet/wallet-core';
+import {GetAddressParametersType} from './types';
 
-const hostname = '0.0.0.0';
-const port = 8080;
+export const getAddress = async (
+  {user, assetId, custody, wallet}: GetAddressParametersType,
+  apiKey: string
+): Promise<{
+  address: string;
+  memo?: string;
+}> => {
+  if (!process.env.MNEMONIC) {
+    throw new Error('MNEMONIC not set');
+  }
+  const {CoinType, HDWallet, AnyAddress} = await initWasm();
+  const hdwallet = HDWallet.createWithMnemonic(process.env.MNEMONIC, '');
+  // call store get the next index for org, asset, custody
+  const key = hdwallet.getKeyForCoin({value: bip44Path});
+  const pubKey = key.getPublicKeySecp256k1(false);
+  const address = AnyAddress.createWithPublicKey(pubKey, CoinType.ethereum);
+  return {address: address.description()};
+};
 
-const server = createServer((req: IncomingMessage, res: ServerResponse) => {
-  res.statusCode = 200;
-  res.setHeader('Content-Type', 'text/plain');
-  res.end('Hello, World!!!\n');
-});
-
-server.listen(port, hostname, () => {
-  console.log(`Server running at http://${hostname}:${port}/ `);
-});
-
+// preMVP
 (async function () {
   const start = new Date().getTime();
   console.log('Initializing Wasm...');
