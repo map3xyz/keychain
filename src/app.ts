@@ -1,22 +1,49 @@
+require('dotenv').config();
+
 import {initWasm} from '@trustwallet/wallet-core';
+import axios from 'axios';
 import {GetAddressParametersType} from './types';
 
-export const getAddress = async (
-  {user, assetId, custody, wallet}: GetAddressParametersType,
-  apiKey: string
-): Promise<{
+export const getAddress = async ({
+  user,
+  assetId,
+  custody,
+  wallet,
+}: GetAddressParametersType): Promise<{
   address: string;
   memo?: string;
 }> => {
   if (!process.env.MNEMONIC) {
     throw new Error('MNEMONIC not set');
   }
-  const {CoinType, HDWallet, AnyAddress} = await initWasm();
-  const hdwallet = HDWallet.createWithMnemonic(process.env.MNEMONIC, '');
+  const {HDWallet, AnyAddress} = await initWasm();
   // call store get the next index for org, asset, custody
-  const key = hdwallet.getKeyForCoin({value: bip44Path});
-  const pubKey = key.getPublicKeySecp256k1(false);
-  const address = AnyAddress.createWithPublicKey(pubKey, CoinType.ethereum);
+  const response: {data: {index: 0; bip44Path: 60; isRegistered: false}} =
+    await axios.post(
+      'http://localhost:3001/api/store/keychain-address/address-index',
+      {
+        user,
+        assetId,
+        custody,
+        wallet,
+      },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          authorization: `Bearer ${process.env.MAP3_STORE_API_KEY}`,
+        },
+      }
+    );
+
+  const {data} = response;
+
+  const coinType = {value: data.bip44Path};
+  const hdwallet = HDWallet.createWithMnemonic(process.env.MNEMONIC, '');
+  const key = hdwallet.getDerivedKey(coinType, wallet, 0, data.index);
+  const pubKey = key.getPublicKey(coinType);
+  const address = AnyAddress.createWithPublicKey(pubKey, coinType);
+  // if !registered
+  // call store register address
   return {address: address.description()};
 };
 

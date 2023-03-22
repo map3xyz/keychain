@@ -10,10 +10,9 @@ app.post('/', async (req, res) => {
   // hmac stuff
   const data = {
     function: 'getAddress',
-    apiKey: 'asdf',
     parameters: {
       user: 'asdf',
-      assetId: '123-123',
+      assetId: 'da5eb9b1-7e2b-4976-a260-07a3eab89618',
       custody: 'internal',
       wallet: 0,
     } as GetAddressParametersType,
@@ -21,11 +20,12 @@ app.post('/', async (req, res) => {
 
   switch (data.function) {
     case 'getAddress': {
-      const {address, memo} = await getAddress(data.parameters, data.apiKey);
+      const {address, memo} = await getAddress(data.parameters);
       res.send({address, memo});
       break;
     }
     default:
+      res.send('Invalid function');
   }
 });
 
