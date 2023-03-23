@@ -1,0 +1,20 @@
+# This workflow will install dependencies, create coverage tests and run Jest Coverage Comment
+# For more information see: https://github.com/MishaKav/jest-coverage-comment/
+name: Jest coverage comment
+on:
+  pull_request:
+jobs:
+  comment:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+      with:
+        token: ${{ secrets.BOT_ACCESS_TOKEN }}
+        fetch-depth: 0 # otherwise, you will fail to push refs to dest repo
+    - name: Install dependencies
+      run: yarn install
+    - name: Run tests
+      run: |
+        yarn test
+    - name: Jest coverage comment
+      uses: MishaKav/jest-coverage-comment@main
