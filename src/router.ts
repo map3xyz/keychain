@@ -11,7 +11,7 @@ const getNextReceiveIndex = async ({
   wallet,
 }: GetAddressParametersType): Promise<GetNextReceiveIndexResponseType> => {
   const response: {data: GetNextReceiveIndexResponseType} = await axios.post(
-    'http://localhost:3001/api/store/keychain-address/address-index',
+    `${process.env.MAP3_STORE_API}/api/store/keychain-address/address-index`,
     {
       user,
       assetId,
