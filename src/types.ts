@@ -10,3 +10,10 @@ export type GetNextReceiveIndexResponseType = {
   bip44Path: number;
   isRegistered: boolean;
 };
+
+export type RegisterAddressParametersType = GetAddressParametersType & {
+  bip44Path: number;
+  addressIndex: number;
+  address: string;
+  memo?: string;
+};

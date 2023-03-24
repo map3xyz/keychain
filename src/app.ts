@@ -1,7 +1,7 @@
 require('dotenv').config();
 
 import {initWasm} from '@trustwallet/wallet-core';
-import {GetAddressParametersType} from './types';
+import {GetAddressParametersType, RegisterAddressParametersType} from './types';
 import * as router from './router';
 
 export class Keychain {
@@ -32,6 +32,14 @@ export class Keychain {
     return address.description();
   };
 
+  private registerAddress = async (params: RegisterAddressParametersType) => {
+    const registration = await router.registerAddress(params);
+
+    if (registration.status !== 'ok') {
+      throw new Error('Address registration failed');
+    }
+  };
+
   getAddress = async ({
     userId,
     assetId,
@@ -58,7 +66,7 @@ export class Keychain {
 
     // if !registered
     if (!isRegistered) {
-      const registration = await router.registerAddress({
+      await this.registerAddress({
         userId,
         assetId,
         custody,

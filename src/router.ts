@@ -2,6 +2,7 @@ import axios from 'axios';
 import {
   GetAddressParametersType,
   GetNextReceiveIndexResponseType,
+  RegisterAddressParametersType,
 } from './types';
 
 const BASE_URL = `${process.env.MAP3_STORE_API}/api/store/keychain-address`;
@@ -41,12 +42,7 @@ const registerAddress = async ({
   addressIndex,
   memo,
   bip44Path,
-}: GetAddressParametersType & {
-  bip44Path: number;
-  addressIndex: number;
-  address: string;
-  memo?: string;
-}) => {
+}: RegisterAddressParametersType): Promise<{status?: 'ok'; error?: string}> => {
   const response = await axios.post(
     `${BASE_URL}/register-address`,
     {
@@ -66,6 +62,7 @@ const registerAddress = async ({
       },
     }
   );
+
   return response.data;
 };
 

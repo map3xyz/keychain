@@ -92,5 +92,24 @@ describe('app', () => {
         addressIndex: 0,
       });
     });
+    it('does not return address if registration fails', async () => {
+      jest.spyOn(router, 'getNextReceiveIndex').mockResolvedValueOnce({
+        bip44Path: 2,
+        addressIndex: 0,
+        isRegistered: false,
+      });
+      jest.spyOn(router, 'registerAddress').mockResolvedValueOnce({
+        error: 'some error',
+      });
+
+      await expect(
+        keychain.getAddress({
+          userId: 'asdf',
+          assetId: 'litecoin',
+          custody: 'internal',
+          wallet: 0,
+        })
+      ).rejects.toThrow('Address registration failed');
+    });
   });
 });
