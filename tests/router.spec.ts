@@ -1,5 +1,6 @@
-import {getNextReceiveIndex, registerAddress} from '../src/router';
 import axios from 'axios';
+
+import {getNextReceiveIndex, registerAddress} from '../src/router';
 
 describe('router', () => {
   it('getNextReceiveIndex', () => {
@@ -11,9 +12,9 @@ describe('router', () => {
       },
     });
     const result = getNextReceiveIndex({
-      userId: 'asdf',
       assetId: 'bitcoin',
       custody: 'internal',
+      userId: 'asdf',
       wallet: 0,
     });
     expect(result).resolves.toEqual({
@@ -45,14 +46,14 @@ describe('router', () => {
       },
     });
     const result = registerAddress({
-      userId: 'asdf',
-      assetId: 'bitcoin',
-      custody: 'internal',
-      wallet: 0,
       address: 'asdf',
       addressIndex: 0,
-      memo: 'asdf',
+      assetId: 'bitcoin',
       bip44Path: 0,
+      custody: 'internal',
+      memo: 'asdf',
+      userId: 'asdf',
+      wallet: 0,
     });
     expect(result).resolves.toEqual({
       status: 'ok',
@@ -60,14 +61,14 @@ describe('router', () => {
     expect(axios.post).toHaveBeenCalledWith(
       `${process.env.MAP3_STORE_API}/api/store/keychain-address/register-address`,
       {
-        assetId: 'bitcoin',
-        custody: 'internal',
-        userId: 'asdf',
-        wallet: 0,
         address: 'asdf',
         addressIndex: 0,
-        memo: 'asdf',
+        assetId: 'bitcoin',
         bip44Path: 0,
+        custody: 'internal',
+        memo: 'asdf',
+        userId: 'asdf',
+        wallet: 0,
       },
       {
         headers: {

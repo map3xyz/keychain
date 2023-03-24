@@ -1,4 +1,5 @@
 import * as express from 'express';
+
 import {Keychain} from './app';
 import {GetAddressParametersType} from './types';
 
@@ -23,9 +24,9 @@ app.post('/', async (req, res) => {
   const data = {
     function: 'getAddress',
     parameters: {
-      userId: 'asdf-3',
       assetId: 'da5eb9b1-7e2b-4976-a260-07a3eab89618',
       custody: 'internal',
+      userId: 'asdf-3',
       wallet: 1,
     } as GetAddressParametersType,
   };

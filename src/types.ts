@@ -1,7 +1,7 @@
 export type GetAddressParametersType = {
-  userId: string;
   assetId: string;
   custody: 'internal' | 'exchange' | 'custodian';
+  userId: string;
   wallet: number;
 };
 
@@ -12,8 +12,8 @@ export type GetNextReceiveIndexResponseType = {
 };
 
 export type RegisterAddressParametersType = GetAddressParametersType & {
-  bip44Path: number;
-  addressIndex: number;
   address: string;
+  addressIndex: number;
+  bip44Path: number;
   memo?: string;
 };

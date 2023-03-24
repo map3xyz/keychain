@@ -1,8 +1,9 @@
 require('dotenv').config();
 
 import {initWasm} from '@trustwallet/wallet-core';
-import {GetAddressParametersType, RegisterAddressParametersType} from './types';
+
 import * as router from './router';
+import {GetAddressParametersType, RegisterAddressParametersType} from './types';
 
 export class Keychain {
   mnemonic: string;
@@ -14,12 +15,12 @@ export class Keychain {
   }
 
   private deriveAddressFromPath = async (params: {
+    addressIndex: number;
     bip44Path: number;
     wallet: number;
-    addressIndex: number;
   }) => {
-    const {HDWallet, AnyAddress} = await initWasm();
-    const {bip44Path, wallet, addressIndex} = params;
+    const {AnyAddress, HDWallet} = await initWasm();
+    const {addressIndex, bip44Path, wallet} = params;
     const hdwallet = HDWallet.createWithMnemonic(this.mnemonic, '');
     const key = hdwallet.getDerivedKey(
       {value: bip44Path},
@@ -41,39 +42,39 @@ export class Keychain {
   };
 
   getAddress = async ({
-    userId,
     assetId,
     custody,
+    userId,
     wallet,
   }: GetAddressParametersType): Promise<{
     address: string;
     memo?: string;
   }> => {
     // call store get the next index for org, asset, custody
-    const {bip44Path, addressIndex, isRegistered} =
+    const {addressIndex, bip44Path, isRegistered} =
       await router.getNextReceiveIndex({
-        userId,
         assetId,
         custody,
+        userId,
         wallet,
       });
 
     const address = await this.deriveAddressFromPath({
+      addressIndex,
       bip44Path,
       wallet,
-      addressIndex,
     });
 
     // if !registered
     if (!isRegistered) {
       await this.registerAddress({
-        userId,
-        assetId,
-        custody,
-        wallet,
         address,
-        bip44Path,
         addressIndex,
+        assetId,
+        bip44Path,
+        custody,
+        userId,
+        wallet,
       });
     }
     return {address};

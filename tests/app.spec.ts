@@ -10,17 +10,17 @@ describe('app', () => {
   describe('getAddress', () => {
     it('bitcoin', async () => {
       jest.spyOn(router, 'getNextReceiveIndex').mockResolvedValueOnce({
-        bip44Path: 0,
         addressIndex: 0,
+        bip44Path: 0,
         isRegistered: false,
       });
       jest.spyOn(router, 'registerAddress').mockResolvedValueOnce({
         status: 'ok',
       });
       const {address} = await keychain.getAddress({
-        userId: 'asdf',
         assetId: 'bitcoin',
         custody: 'internal',
+        userId: 'asdf',
         wallet: 0,
       });
 
@@ -28,17 +28,17 @@ describe('app', () => {
     });
     it('ethereum', async () => {
       jest.spyOn(router, 'getNextReceiveIndex').mockResolvedValueOnce({
-        bip44Path: 60,
         addressIndex: 0,
+        bip44Path: 60,
         isRegistered: false,
       });
       jest.spyOn(router, 'registerAddress').mockResolvedValueOnce({
         status: 'ok',
       });
       const {address} = await keychain.getAddress({
-        userId: 'asdf',
         assetId: 'ethereum',
         custody: 'internal',
+        userId: 'asdf',
         wallet: 0,
       });
 
@@ -48,17 +48,17 @@ describe('app', () => {
     });
     it('litecoin', async () => {
       jest.spyOn(router, 'getNextReceiveIndex').mockResolvedValueOnce({
-        bip44Path: 2,
         addressIndex: 0,
+        bip44Path: 2,
         isRegistered: false,
       });
       jest.spyOn(router, 'registerAddress').mockResolvedValueOnce({
         status: 'ok',
       });
       const {address} = await keychain.getAddress({
-        userId: 'asdf',
         assetId: 'litcoin',
         custody: 'internal',
+        userId: 'asdf',
         wallet: 0,
       });
 
@@ -66,8 +66,8 @@ describe('app', () => {
     });
     it('registers address', async () => {
       jest.spyOn(router, 'getNextReceiveIndex').mockResolvedValueOnce({
-        bip44Path: 2,
         addressIndex: 0,
+        bip44Path: 2,
         isRegistered: false,
       });
       jest.spyOn(router, 'registerAddress').mockResolvedValueOnce({
@@ -75,27 +75,27 @@ describe('app', () => {
       });
 
       const {address} = await keychain.getAddress({
-        userId: 'asdf',
         assetId: 'litecoin',
         custody: 'internal',
+        userId: 'asdf',
         wallet: 0,
       });
 
       expect(address).toBe('ltc1qaetzxxme6h7qhwg5lvjff3tagjtdn5gkpnl005');
       expect(router.registerAddress).toHaveBeenCalledWith({
-        userId: 'asdf',
-        assetId: 'litecoin',
-        custody: 'internal',
-        wallet: 0,
         address: 'ltc1qaetzxxme6h7qhwg5lvjff3tagjtdn5gkpnl005',
-        bip44Path: 2,
         addressIndex: 0,
+        assetId: 'litecoin',
+        bip44Path: 2,
+        custody: 'internal',
+        userId: 'asdf',
+        wallet: 0,
       });
     });
     it('does not return address if registration fails', async () => {
       jest.spyOn(router, 'getNextReceiveIndex').mockResolvedValueOnce({
-        bip44Path: 2,
         addressIndex: 0,
+        bip44Path: 2,
         isRegistered: false,
       });
       jest.spyOn(router, 'registerAddress').mockResolvedValueOnce({
@@ -104,9 +104,9 @@ describe('app', () => {
 
       await expect(
         keychain.getAddress({
-          userId: 'asdf',
           assetId: 'litecoin',
           custody: 'internal',
+          userId: 'asdf',
           wallet: 0,
         })
       ).rejects.toThrow('Address registration failed');

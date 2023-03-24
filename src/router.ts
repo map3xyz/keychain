@@ -1,4 +1,5 @@
 import axios from 'axios';
+
 import {
   GetAddressParametersType,
   GetNextReceiveIndexResponseType,
@@ -29,7 +30,7 @@ const getNextReceiveIndex = async (
 
 const registerAddress = async (
   params: RegisterAddressParametersType
-): Promise<{status?: 'ok'; error?: string}> => {
+): Promise<{error?: string; status?: 'ok'}> => {
   const response = await axios.post(`${BASE_URL}/register-address`, params, {
     headers,
   });
