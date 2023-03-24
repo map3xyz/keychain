@@ -41,40 +41,27 @@ export class Keychain {
     }
   };
 
-  getAddress = async ({
-    assetId,
-    custody,
-    userId,
-    wallet,
-  }: GetAddressParametersType): Promise<{
+  getAddress = async (
+    params: GetAddressParametersType
+  ): Promise<{
     address: string;
     memo?: string;
   }> => {
-    // call store get the next index for org, asset, custody
     const {addressIndex, bip44Path, isRegistered} =
-      await router.getNextReceiveIndex({
-        assetId,
-        custody,
-        userId,
-        wallet,
-      });
+      await router.getNextReceiveIndex(params);
 
     const address = await this.deriveAddressFromPath({
       addressIndex,
       bip44Path,
-      wallet,
+      wallet: params.wallet,
     });
 
-    // if !registered
     if (!isRegistered) {
       await this.registerAddress({
+        ...params,
         address,
         addressIndex,
-        assetId,
         bip44Path,
-        custody,
-        userId,
-        wallet,
       });
     }
     return {address};
