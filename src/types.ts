@@ -17,3 +17,8 @@ export type RegisterAddressParametersType = GetAddressParametersType & {
   bip44Path: number;
   memo?: string;
 };
+
+export type RegisterAddressResponseType = {
+  error?: string;
+  status?: 'ok';
+};

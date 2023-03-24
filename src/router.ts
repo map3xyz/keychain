@@ -4,6 +4,7 @@ import {
   GetAddressParametersType,
   GetNextReceiveIndexResponseType,
   RegisterAddressParametersType,
+  RegisterAddressResponseType,
 } from './types';
 
 const BASE_URL = `${process.env.MAP3_STORE_API}/api/store/keychain-address`;
@@ -30,10 +31,14 @@ const getNextReceiveIndex = async (
 
 const registerAddress = async (
   params: RegisterAddressParametersType
-): Promise<{error?: string; status?: 'ok'}> => {
-  const response = await axios.post(`${BASE_URL}/register-address`, params, {
-    headers,
-  });
+): Promise<RegisterAddressResponseType> => {
+  const response: {data: RegisterAddressResponseType} = await axios.post(
+    `${BASE_URL}/register-address`,
+    params,
+    {
+      headers,
+    }
+  );
 
   return response.data;
 };
