@@ -23,7 +23,7 @@ app.post('/', async (req, res) => {
   const data = {
     function: 'getAddress',
     parameters: {
-      user: 'asdf',
+      userId: 'asdf',
       assetId: 'da5eb9b1-7e2b-4976-a260-07a3eab89618',
       custody: 'internal',
       wallet: 0,

@@ -11,11 +11,14 @@ describe('app', () => {
     it('bitcoin', async () => {
       jest.spyOn(router, 'getNextReceiveIndex').mockResolvedValueOnce({
         bip44Path: 0,
-        index: 0,
+        addressIndex: 0,
         isRegistered: false,
       });
+      jest.spyOn(router, 'registerAddress').mockResolvedValueOnce({
+        status: 'ok',
+      });
       const {address} = await keychain.getAddress({
-        user: 'asdf',
+        userId: 'asdf',
         assetId: 'bitcoin',
         custody: 'internal',
         wallet: 0,
@@ -26,11 +29,14 @@ describe('app', () => {
     it('ethereum', async () => {
       jest.spyOn(router, 'getNextReceiveIndex').mockResolvedValueOnce({
         bip44Path: 60,
-        index: 0,
+        addressIndex: 0,
         isRegistered: false,
       });
+      jest.spyOn(router, 'registerAddress').mockResolvedValueOnce({
+        status: 'ok',
+      });
       const {address} = await keychain.getAddress({
-        user: 'asdf',
+        userId: 'asdf',
         assetId: 'ethereum',
         custody: 'internal',
         wallet: 0,
@@ -43,17 +49,48 @@ describe('app', () => {
     it('litecoin', async () => {
       jest.spyOn(router, 'getNextReceiveIndex').mockResolvedValueOnce({
         bip44Path: 2,
-        index: 0,
+        addressIndex: 0,
         isRegistered: false,
       });
+      jest.spyOn(router, 'registerAddress').mockResolvedValueOnce({
+        status: 'ok',
+      });
       const {address} = await keychain.getAddress({
-        user: 'asdf',
+        userId: 'asdf',
         assetId: 'litcoin',
         custody: 'internal',
         wallet: 0,
       });
 
       expect(address).toBe('ltc1qaetzxxme6h7qhwg5lvjff3tagjtdn5gkpnl005');
+    });
+    it('registers address', async () => {
+      jest.spyOn(router, 'getNextReceiveIndex').mockResolvedValueOnce({
+        bip44Path: 2,
+        addressIndex: 0,
+        isRegistered: false,
+      });
+      jest.spyOn(router, 'registerAddress').mockResolvedValueOnce({
+        status: 'ok',
+      });
+
+      const {address} = await keychain.getAddress({
+        userId: 'asdf',
+        assetId: 'litecoin',
+        custody: 'internal',
+        wallet: 0,
+      });
+
+      expect(address).toBe('ltc1qaetzxxme6h7qhwg5lvjff3tagjtdn5gkpnl005');
+      expect(router.registerAddress).toHaveBeenCalledWith({
+        userId: 'asdf',
+        assetId: 'litecoin',
+        custody: 'internal',
+        wallet: 0,
+        address: 'ltc1qaetzxxme6h7qhwg5lvjff3tagjtdn5gkpnl005',
+        bip44Path: 2,
+        addressIndex: 0,
+      });
     });
   });
 });

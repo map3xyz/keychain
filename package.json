@@ -11,7 +11,7 @@
     "fix": "gts fix",
     "prepare": "npm run compile",
     "start": "node dist/server.js",
-    "test": "DOTENV_CONFIG_PATH=.env.test jest --setupFiles=dotenv/config",
+    "test": "DOTENV_CONFIG_PATH=.env.test jest",
     "watch": "tsc -w"
   },
   "keywords": [],

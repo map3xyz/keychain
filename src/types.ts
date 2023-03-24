@@ -1,12 +1,12 @@
 export type GetAddressParametersType = {
-  user: string;
+  userId: string;
   assetId: string;
   custody: 'internal' | 'exchange' | 'custodian';
   wallet: number;
 };
 
 export type GetNextReceiveIndexResponseType = {
-  index: number;
+  addressIndex: number;
   bip44Path: number;
   isRegistered: boolean;
 };
