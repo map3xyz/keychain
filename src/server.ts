@@ -24,17 +24,26 @@ app.post('/', async (req, res) => {
   const data = {
     function: 'getAddress',
     parameters: {
-      assetId: 'da5eb9b1-7e2b-4976-a260-07a3eab89618',
+      assetId: '38975bff-987f-4a06-b488-c75177e06914',
       custody: 'internal',
-      userId: 'asdf-3',
-      wallet: 1,
+      userId: 'test-user-03',
+      wallet: 0,
     } as GetAddressParametersType,
   };
 
   switch (data.function) {
     case 'getAddress': {
-      const {address, memo} = await keychain.getAddress(data.parameters);
-      res.send({address, memo});
+      try {
+        const {address, memo} = await keychain.getAddress(data.parameters);
+        res.send({address, memo});
+      } catch (e: any) {
+        res.status(500);
+        if (e.message && e.response.data.error) {
+          res.send({error: e.response.data.error});
+        } else {
+          res.send('Unknown error');
+        }
+      }
       break;
     }
     default:

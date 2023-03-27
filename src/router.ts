@@ -40,7 +40,8 @@ const registerAddress = async (
     }
   );
 
-  return response.data;
+  const {data} = response;
+  return data;
 };
 
 export {getNextReceiveIndex, registerAddress};
