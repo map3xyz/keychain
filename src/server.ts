@@ -1,4 +1,3 @@
-import {debug} from 'console';
 import * as express from 'express';
 
 import {Keychain} from './app';
@@ -58,8 +57,8 @@ const server = app.listen(PORT, () => {
 });
 
 process.on('SIGTERM', () => {
-  debug('SIGTERM signal received: closing HTTP server');
+  logger.debug('SIGTERM signal received: closing HTTP server');
   server.close(() => {
-    debug('HTTP server closed');
+    logger.debug('HTTP server closed');
   });
 });
