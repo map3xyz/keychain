@@ -4,6 +4,7 @@ import {initWasm} from '@trustwallet/wallet-core';
 
 import * as storeAPI from './store-api';
 import {GetAddressParametersType, RegisterAddressParametersType} from './types';
+import {logger} from './utils/logger';
 
 export class Keychain {
   mnemonic: string;

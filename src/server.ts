@@ -3,6 +3,8 @@ import * as express from 'express';
 
 import {Keychain} from './app';
 import {GetAddressParametersType} from './types';
+import catcher from './utils/catcher';
+import {logger} from './utils/logger';
 
 const app = express();
 
@@ -35,10 +37,11 @@ app.post('/', async (req, res) => {
       try {
         const {address, memo} = await keychain.getAddress(data.parameters);
         res.send({address, memo});
-      } catch (e: any) {
+      } catch (e) {
+        const error = catcher(e);
         res.status(500);
-        if (e.message && e.response.data.error) {
-          res.send({error: e.response.data.error});
+        if (error) {
+          res.send({error});
         } else {
           res.send('Unknown error');
         }
@@ -50,9 +53,9 @@ app.post('/', async (req, res) => {
   }
 });
 
-const server = app.listen(PORT, () =>
-  console.log(`⚡ Server is running here 👉 http://localhost:${PORT}`)
-);
+const server = app.listen(PORT, () => {
+  logger.info(`⚡ Server is running here 👉 http://localhost:${PORT}`);
+});
 
 process.on('SIGTERM', () => {
   debug('SIGTERM signal received: closing HTTP server');
