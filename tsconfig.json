@@ -1,7 +1,6 @@
 {
   "extends": "./node_modules/gts/tsconfig-google.json",
   "compilerOptions": {
-    "noEmitOnError": false,
     "rootDir": "src",
     "skipLibCheck": true,
     "outDir": "dist"
