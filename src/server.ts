@@ -1,7 +1,7 @@
 import {initWasm} from '@trustwallet/wallet-core';
 import * as express from 'express';
 
-import {Keychain} from './app';
+import {Keychain} from './keychain';
 import {hmacMiddleware} from './middlewares/hmac';
 import {GetAddressParametersType} from './types';
 import {catcher} from './utils/catcher';

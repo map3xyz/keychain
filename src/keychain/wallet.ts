@@ -1,30 +1,28 @@
-require('dotenv').config();
+import * as storeAPI from '../store-api';
+import {
+  GetAddressParametersType,
+  RegisterAddressParametersType,
+} from '../types';
+import {Keychain} from '.';
 
-import {WalletCore} from '@trustwallet/wallet-core';
+export class Wallet {
+  #keychain: Keychain;
+  walletId: number;
 
-import * as storeAPI from './store-api';
-import {GetAddressParametersType, RegisterAddressParametersType} from './types';
-
-export class Keychain {
-  #mnemonic: string;
-  #tw: WalletCore;
-
-  constructor(args: {mnemonic: string; tw: WalletCore}) {
-    this.#mnemonic = args.mnemonic;
-    this.#tw = args.tw;
+  constructor(args: {keychain: Keychain; walletId: number}) {
+    this.#keychain = args.keychain;
+    this.walletId = args.walletId;
   }
 
   private deriveAddressFromPath = (params: {
     addressIndex: number;
     bip44Path: number;
-    wallet: number;
   }) => {
-    const {AnyAddress, HDWallet} = this.#tw;
-    const {addressIndex, bip44Path, wallet} = params;
-    const hdwallet = HDWallet.createWithMnemonic(this.#mnemonic, '');
-    const key = hdwallet.getDerivedKey(
+    const {AnyAddress} = this.#keychain.tw;
+    const {addressIndex, bip44Path} = params;
+    const key = this.#keychain.hdwallet.getDerivedKey(
       {value: bip44Path},
-      wallet,
+      this.walletId,
       0,
       addressIndex
     );
@@ -53,7 +51,6 @@ export class Keychain {
     const address = this.deriveAddressFromPath({
       addressIndex,
       bip44Path,
-      wallet: params.wallet,
     });
 
     if (!isRegistered) {

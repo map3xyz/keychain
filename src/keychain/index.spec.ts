@@ -1,11 +1,11 @@
 import {initWasm} from '@trustwallet/wallet-core';
 
-import * as storeApi from '../src/store-api';
-import {Keychain} from './app';
+import * as storeApi from '../store-api';
+import {Keychain} from '.';
 
 let keychain: Keychain;
 
-describe('app', () => {
+describe('keychain', () => {
   beforeAll(async () => {
     const tw = await initWasm();
     keychain = new Keychain({
