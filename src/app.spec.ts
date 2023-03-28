@@ -1,11 +1,19 @@
+import {initWasm} from '@trustwallet/wallet-core';
+
 import * as storeApi from '../src/store-api';
 import {Keychain} from './app';
 
-const keychain = new Keychain({
-  mnemonic: process.env.MNEMONIC!,
-});
+let keychain: Keychain;
 
 describe('app', () => {
+  beforeAll(async () => {
+    const tw = await initWasm();
+    keychain = new Keychain({
+      mnemonic: process.env.MNEMONIC!,
+      tw,
+    });
+  });
+
   describe('getAddress', () => {
     it('bitcoin', async () => {
       jest.spyOn(storeApi, 'getNextReceiveIndex').mockResolvedValueOnce({

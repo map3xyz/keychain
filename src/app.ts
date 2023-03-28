@@ -1,26 +1,27 @@
 require('dotenv').config();
 
-import {initWasm} from '@trustwallet/wallet-core';
+import {WalletCore} from '@trustwallet/wallet-core';
 
 import * as storeAPI from './store-api';
 import {GetAddressParametersType, RegisterAddressParametersType} from './types';
-import {logger} from './utils/logger';
 
 export class Keychain {
-  mnemonic: string;
+  #mnemonic: string;
+  #tw: WalletCore;
 
-  constructor(args: {mnemonic: string}) {
-    this.mnemonic = args.mnemonic;
+  constructor(args: {mnemonic: string; tw: WalletCore}) {
+    this.#mnemonic = args.mnemonic;
+    this.#tw = args.tw;
   }
 
-  private deriveAddressFromPath = async (params: {
+  private deriveAddressFromPath = (params: {
     addressIndex: number;
     bip44Path: number;
     wallet: number;
   }) => {
-    const {AnyAddress, HDWallet} = await initWasm();
+    const {AnyAddress, HDWallet} = this.#tw;
     const {addressIndex, bip44Path, wallet} = params;
-    const hdwallet = HDWallet.createWithMnemonic(this.mnemonic, '');
+    const hdwallet = HDWallet.createWithMnemonic(this.#mnemonic, '');
     const key = hdwallet.getDerivedKey(
       {value: bip44Path},
       wallet,
@@ -49,7 +50,7 @@ export class Keychain {
     const {addressIndex, bip44Path, isRegistered} =
       await storeAPI.getNextReceiveIndex(params);
 
-    const address = await this.deriveAddressFromPath({
+    const address = this.deriveAddressFromPath({
       addressIndex,
       bip44Path,
       wallet: params.wallet,
