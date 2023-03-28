@@ -1,6 +1,6 @@
 import {logger} from './logger';
 
-const catcher = (e: any) => {
+export const catcher = (e: any) => {
   logger.error(e);
   if (e.response && e.response.data) {
     return e.response.data.error;
@@ -10,5 +10,3 @@ const catcher = (e: any) => {
   }
   return null;
 };
-
-export default catcher;

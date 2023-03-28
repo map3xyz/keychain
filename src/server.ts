@@ -2,13 +2,15 @@ import {initWasm} from '@trustwallet/wallet-core';
 import * as express from 'express';
 
 import {Keychain} from './app';
+import {hmacMiddleware} from './middlewares/hmac';
 import {GetAddressParametersType} from './types';
-import catcher from './utils/catcher';
+import {catcher} from './utils/catcher';
 import {logger} from './utils/logger';
 
 const app = express();
-
 const PORT = process.env.PORT || 4000;
+
+app.use(hmacMiddleware);
 
 logger.info('Starting server...');
 (async () => {
