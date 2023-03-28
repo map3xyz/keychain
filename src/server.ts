@@ -25,7 +25,6 @@ app.post('/', async (req, res) => {
     function: 'getAddress',
     parameters: {
       assetId: '38975bff-987f-4a06-b488-c75177e06914',
-      custody: 'internal',
       userId: 'test-user-03',
       wallet: 0,
     } as GetAddressParametersType,

@@ -1,6 +1,5 @@
 export type GetAddressParametersType = {
   assetId: string;
-  custody: 'internal' | 'exchange' | 'custodian';
   userId: string;
   wallet: number;
 };
