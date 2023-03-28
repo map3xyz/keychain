@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import {getNextReceiveIndex, registerAddress} from '../src/router';
+import {getNextReceiveIndex, registerAddress} from '../src/store-api';
 
 describe('router', () => {
   it('getNextReceiveIndex', () => {
@@ -13,7 +13,6 @@ describe('router', () => {
     });
     const result = getNextReceiveIndex({
       assetId: 'bitcoin',
-      custody: 'internal',
       userId: 'asdf',
       wallet: 0,
     });
@@ -26,7 +25,6 @@ describe('router', () => {
       `${process.env.MAP3_STORE_API}/api/store/keychain-address/address-index`,
       {
         assetId: 'bitcoin',
-        custody: 'internal',
         userId: 'asdf',
         wallet: 0,
       },
@@ -50,7 +48,6 @@ describe('router', () => {
       addressIndex: 0,
       assetId: 'bitcoin',
       bip44Path: 0,
-      custody: 'internal',
       memo: 'asdf',
       userId: 'asdf',
       wallet: 0,
@@ -65,7 +62,6 @@ describe('router', () => {
         addressIndex: 0,
         assetId: 'bitcoin',
         bip44Path: 0,
-        custody: 'internal',
         memo: 'asdf',
         userId: 'asdf',
         wallet: 0,
