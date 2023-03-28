@@ -1,10 +1,9 @@
 import * as storeApi from '../src/store-api';
 import {Keychain} from './app';
 
-const keychain = new Keychain(
-  process.env.MNEMONIC!,
-  process.env.STORE_API_KEY!
-);
+const keychain = new Keychain({
+  mnemonic: process.env.MNEMONIC!,
+});
 
 describe('app', () => {
   describe('getAddress', () => {

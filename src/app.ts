@@ -7,11 +7,9 @@ import {GetAddressParametersType, RegisterAddressParametersType} from './types';
 
 export class Keychain {
   mnemonic: string;
-  apiKey: string;
 
-  constructor(mnemonic: string, apiKey: string) {
-    this.mnemonic = mnemonic;
-    this.apiKey = apiKey;
+  constructor(args: {mnemonic: string}) {
+    this.mnemonic = args.mnemonic;
   }
 
   private deriveAddressFromPath = async (params: {

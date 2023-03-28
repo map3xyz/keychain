@@ -14,10 +14,9 @@ if (!process.env.MAP3_STORE_API_KEY) {
   throw new Error('MAP3_STORE_API_KEY is required');
 }
 
-const keychain = new Keychain(
-  process.env.MNEMONIC,
-  process.env.MAP3_STORE_API_KEY
-);
+const keychain = new Keychain({
+  mnemonic: process.env.MNEMONIC,
+});
 
 app.post('/', async (req, res) => {
   // hmac stuff
