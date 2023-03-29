@@ -27,7 +27,7 @@ describe('keychain', () => {
       const {address} = await keychain.getAddress({
         assetId: 'bitcoin',
         userId: 'asdf',
-        wallet: 0,
+        walletId: 0,
       });
 
       expect(address).toBe('bc1qyvlz4t2y9c9ksfd7uu9kfv8rmhhjxvfwrnyqmc');
@@ -44,7 +44,7 @@ describe('keychain', () => {
       const {address} = await keychain.getAddress({
         assetId: 'ethereum',
         userId: 'asdf',
-        wallet: 0,
+        walletId: 0,
       });
 
       expect(address).toStrictEqual(
@@ -63,7 +63,7 @@ describe('keychain', () => {
       const {address} = await keychain.getAddress({
         assetId: 'litcoin',
         userId: 'asdf',
-        wallet: 0,
+        walletId: 0,
       });
 
       expect(address).toBe('ltc1qaetzxxme6h7qhwg5lvjff3tagjtdn5gkpnl005');
@@ -81,7 +81,7 @@ describe('keychain', () => {
       const {address} = await keychain.getAddress({
         assetId: 'litecoin',
         userId: 'asdf',
-        wallet: 0,
+        walletId: 0,
       });
 
       expect(address).toBe('ltc1qaetzxxme6h7qhwg5lvjff3tagjtdn5gkpnl005');
@@ -91,7 +91,7 @@ describe('keychain', () => {
         assetId: 'litecoin',
         bip44Path: 2,
         userId: 'asdf',
-        wallet: 0,
+        walletId: 0,
       });
     });
     it('does not return address if registration fails', async () => {
@@ -108,7 +108,7 @@ describe('keychain', () => {
         keychain.getAddress({
           assetId: 'litecoin',
           userId: 'asdf',
-          wallet: 0,
+          walletId: 0,
         })
       ).rejects.toThrow('Address registration failed');
     });

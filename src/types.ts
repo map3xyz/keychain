@@ -1,7 +1,7 @@
 export type GetAddressParametersType = {
   assetId: string;
   userId: string;
-  wallet: number;
+  walletId: number;
 };
 
 export type GetNextReceiveIndexResponseType = {
