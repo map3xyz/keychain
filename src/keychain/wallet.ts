@@ -2,6 +2,7 @@ import * as storeAPI from '../store-api';
 import {
   GetAddressParametersType,
   RegisterAddressParametersType,
+  SendParametersType,
 } from '../types';
 import {Keychain} from '.';
 
@@ -62,5 +63,15 @@ export class Wallet {
       });
     }
     return {address};
+  };
+
+  send = async (
+    params: SendParametersType
+  ): Promise<{
+    txId: string;
+  }> => {
+    const utxos = await storeAPI.getUTXOs(params);
+    console.log(utxos);
+    return {txId: 'txId'};
   };
 }

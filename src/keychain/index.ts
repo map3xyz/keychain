@@ -3,7 +3,7 @@ require('dotenv').config();
 import {WalletCore} from '@trustwallet/wallet-core';
 import {HDWallet} from '@trustwallet/wallet-core/dist/src/wallet-core';
 
-import {GetAddressParametersType} from '../types';
+import {GetAddressParametersType, SendParametersType} from '../types';
 import {Wallet} from './wallet';
 
 export class Keychain {
@@ -27,5 +27,10 @@ export class Keychain {
   }> => {
     const wallet = this.wallets[params.wallet];
     return wallet.getAddress(params);
+  };
+
+  send = async (params: SendParametersType) => {
+    const wallet = this.wallets[params.walletId];
+    return wallet.send(params);
   };
 }

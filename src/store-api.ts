@@ -3,8 +3,10 @@ import axios from 'axios';
 import {
   GetAddressParametersType,
   GetNextReceiveIndexResponseType,
+  GetUTXOsResponseType,
   RegisterAddressParametersType,
   RegisterAddressResponseType,
+  SendParametersType,
 } from './types';
 
 const BASE_URL = `${process.env.MAP3_STORE_API}/api/store/keychain-address`;
@@ -44,4 +46,19 @@ const registerAddress = async (
   return data;
 };
 
-export {getNextReceiveIndex, registerAddress};
+const getUTXOs = async (
+  params: SendParametersType
+): Promise<GetUTXOsResponseType> => {
+  const response: {data: GetUTXOsResponseType} = await axios.post(
+    `${BASE_URL}/utxos`,
+    params,
+    {
+      headers,
+    }
+  );
+
+  const {data} = response;
+  return data;
+};
+
+export {getNextReceiveIndex, getUTXOs, registerAddress};

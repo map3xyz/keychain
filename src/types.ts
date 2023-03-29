@@ -4,6 +4,14 @@ export type GetAddressParametersType = {
   wallet: number;
 };
 
+export type SendParametersType = {
+  amount: number;
+  assetId: string;
+  memo?: string;
+  userId: string;
+  walletId: number;
+};
+
 export type GetNextReceiveIndexResponseType = {
   addressIndex: number;
   bip44Path: number;
@@ -21,3 +29,16 @@ export type RegisterAddressResponseType = {
   error?: string;
   status?: 'ok';
 };
+
+export type GetUTXOsResponseType = {
+  block_height: number;
+  confirmations: number;
+  confirmed: string;
+  double_spend: boolean;
+  ref_balance: number;
+  spent: false;
+  tx_hash: string;
+  tx_input_n: number;
+  tx_output_n: number;
+  value: number;
+}[];
