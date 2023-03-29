@@ -14,7 +14,7 @@ describe('router', () => {
     const result = getNextReceiveIndex({
       assetId: 'bitcoin',
       userId: 'asdf',
-      wallet: 0,
+      walletId: 0,
     });
     expect(result).resolves.toEqual({
       bip44Path: 0,
@@ -26,7 +26,7 @@ describe('router', () => {
       {
         assetId: 'bitcoin',
         userId: 'asdf',
-        wallet: 0,
+        walletId: 0,
       },
       {
         headers: {
@@ -50,7 +50,7 @@ describe('router', () => {
       bip44Path: 0,
       memo: 'asdf',
       userId: 'asdf',
-      wallet: 0,
+      walletId: 0,
     });
     expect(result).resolves.toEqual({
       status: 'ok',
@@ -64,7 +64,7 @@ describe('router', () => {
         bip44Path: 0,
         memo: 'asdf',
         userId: 'asdf',
-        wallet: 0,
+        walletId: 0,
       },
       {
         headers: {

@@ -25,7 +25,7 @@ export class Keychain {
     address: string;
     memo?: string;
   }> => {
-    const wallet = this.wallets[params.wallet];
+    const wallet = this.wallets[params.walletId];
     return wallet.getAddress(params);
   };
 }
