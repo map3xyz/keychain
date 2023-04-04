@@ -46,8 +46,8 @@ logger.info('Starting server...');
         function: 'getAddress',
         parameters: {
           assetId: '38975bff-987f-4a06-b488-c75177e06914',
-          userId: 'test-user-05',
-          walletId: 1,
+          userId: 'test-user-03',
+          walletId: 0,
         } as GetAddressParametersType,
       };
 
