@@ -1,6 +1,8 @@
 import {initWasm} from '@trustwallet/wallet-core';
-import * as express from 'express';
+import express from 'express';
 
+// eslint-disable-next-line node/no-unpublished-import
+import config from '../map3.config.json';
 import {Keychain} from './keychain';
 import {hmacMiddleware} from './middlewares/hmac';
 import {GetAddressParametersType} from './types';
@@ -21,8 +23,8 @@ logger.info('Starting server...');
     if (process.env.MNEMONIC.split(' ').length !== 24) {
       throw new Error('MNEMONIC must be 24 words');
     }
-    if (!process.env.MAP3_STORE_API_KEY) {
-      throw new Error('MAP3_STORE_API_KEY is required');
+    if (!config.storeApiKey) {
+      throw new Error('storeApiKey is required');
     }
 
     const tw = await initWasm();
@@ -33,6 +35,7 @@ logger.info('Starting server...');
     }
 
     const keychain = new Keychain({
+      config,
       mnemonic: process.env.MNEMONIC,
       tw,
     });
@@ -43,8 +46,8 @@ logger.info('Starting server...');
         function: 'getAddress',
         parameters: {
           assetId: '38975bff-987f-4a06-b488-c75177e06914',
-          userId: 'test-user-03',
-          wallet: 0,
+          userId: 'test-user-05',
+          walletId: 1,
         } as GetAddressParametersType,
       };
 

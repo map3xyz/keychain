@@ -1,5 +1,7 @@
 import axios from 'axios';
 
+// eslint-disable-next-line node/no-unpublished-import
+import config from '../map3.config.json';
 import {
   GetAddressParametersType,
   GetNextReceiveIndexResponseType,
@@ -13,11 +15,13 @@ const BASE_URL = `${process.env.MAP3_STORE_API}/api/store/keychain-address`;
 
 const headers = {
   'Content-Type': 'application/json',
-  authorization: `Bearer ${process.env.MAP3_STORE_API_KEY}`,
+  authorization: `Bearer ${config.storeApiKey}`,
 };
 
 const getNextReceiveIndex = async (
-  params: GetAddressParametersType
+  params: GetAddressParametersType & {
+    accessToken: string;
+  }
 ): Promise<GetNextReceiveIndexResponseType> => {
   const response: {data: GetNextReceiveIndexResponseType} = await axios.post(
     `${BASE_URL}/address-index`,

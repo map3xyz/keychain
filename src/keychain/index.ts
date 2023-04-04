@@ -11,12 +11,18 @@ export class Keychain {
   hdwallet: HDWallet;
   wallets: Wallet[];
 
-  constructor(args: {mnemonic: string; tw: WalletCore}) {
-    const {mnemonic, tw} = args;
+  constructor(args: {
+    config: {wallets: {apiKey: string; id: number; name: string}[]};
+    mnemonic: string;
+    tw: WalletCore;
+  }) {
+    const {config, mnemonic, tw} = args;
 
     this.tw = tw;
     this.hdwallet = tw.HDWallet.createWithMnemonic(mnemonic, '');
-    this.wallets = [new Wallet({keychain: this, walletId: 0})];
+    this.wallets = config.wallets.map(({apiKey, id, name}) => {
+      return new Wallet({apiKey, keychain: this, name, walletId: id});
+    });
   }
 
   getAddress = async (
@@ -25,7 +31,7 @@ export class Keychain {
     address: string;
     memo?: string;
   }> => {
-    const wallet = this.wallets[params.wallet];
+    const wallet = this.wallets[params.walletId];
     return wallet.getAddress(params);
   };
 

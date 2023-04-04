@@ -9,10 +9,19 @@ import {Keychain} from '.';
 export class Wallet {
   #keychain: Keychain;
   walletId: number;
+  apiKey: string;
+  name: string;
 
-  constructor(args: {keychain: Keychain; walletId: number}) {
+  constructor(args: {
+    apiKey: string;
+    keychain: Keychain;
+    name: string;
+    walletId: number;
+  }) {
     this.#keychain = args.keychain;
     this.walletId = args.walletId;
+    this.apiKey = args.apiKey;
+    this.name = args.name;
   }
 
   private deriveAddressFromPath = (params: {
@@ -46,8 +55,8 @@ export class Wallet {
     address: string;
     memo?: string;
   }> => {
-    const {addressIndex, bip44Path, isRegistered} =
-      await storeAPI.getNextReceiveIndex(params);
+    const {addressIndex, bip44Path, isRegistered, keychainId} =
+      await storeAPI.getNextReceiveIndex({...params, accessToken: this.apiKey});
 
     const address = this.deriveAddressFromPath({
       addressIndex,
@@ -60,6 +69,7 @@ export class Wallet {
         address,
         addressIndex,
         bip44Path,
+        keychainId,
       });
     }
     return {address};
@@ -71,7 +81,6 @@ export class Wallet {
     txId: string;
   }> => {
     const utxos = await storeAPI.getUTXOs(params);
-    console.log(utxos);
     return {txId: 'txId'};
   };
 }

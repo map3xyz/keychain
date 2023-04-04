@@ -1,0 +1,10 @@
+{
+  "storeApiKey": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJjb25zb2xlIiwib3JnX2lkIjoiZjQ5ZWNkNGMtNTkyMy00Y2M5LWE4NTQtYWFjZGYzNjliOTdlIiwicm9sZXMiOlsicmVhZCIsIndyaXRlIl0sImlhdCI6MTY4MDYxMTU3MCwiZXhwIjoxNzEyMTQ3NTcwfQ.1HeMAiSEJzkA_x06c_Nk4oH_7ckZzNsjlyaO-Kca7R0",
+  "wallets": [
+    {
+      "id": 0,
+      "apiKey": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJjb25zb2xlIiwib3JnX2lkIjoiZjQ5ZWNkNGMtNTkyMy00Y2M5LWE4NTQtYWFjZGYzNjliOTdlIiwicm9sZXMiOlsia2V5Y2hhaW4iXSwiaWF0IjoxNjgwNjE1OTEyLCJleHAiOjE3MTIxNTE5MTJ9.3D7PSWb2f5h2M6mKnFrJERZQiDT4DCm3-vDfcwiNl9g",
+      "name": "exchange"
+    }
+  ]
+}

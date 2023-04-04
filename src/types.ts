@@ -1,7 +1,7 @@
 export type GetAddressParametersType = {
   assetId: string;
   userId: string;
-  wallet: number;
+  walletId: number;
 };
 
 export type SendParametersType = {
@@ -16,12 +16,14 @@ export type GetNextReceiveIndexResponseType = {
   addressIndex: number;
   bip44Path: number;
   isRegistered: boolean;
+  keychainId: string;
 };
 
 export type RegisterAddressParametersType = GetAddressParametersType & {
   address: string;
   addressIndex: number;
   bip44Path: number;
+  keychainId: string;
   memo?: string;
 };
 

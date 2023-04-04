@@ -1,11 +1,12 @@
 import axios from 'axios';
 
+import config from '../map3.config.example.json';
 import {getNextReceiveIndex, getUTXOs, registerAddress} from '../src/store-api';
 
 const headers = {
   'Content-Type': 'application/json',
   authorization:
-    'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJjb25zb2xlIiwib3JnX2lkIjoiYjQ5YzNjMDItZWJlMi00Y2U3LTgwNjAtODI0ODlmYjFiMDI5Iiwicm9sZXMiOlsiYW5vbnltb3VzIl0sImlhdCI6MTY2OTU5NjgzNywiZXhwIjoxNzAxMTMyODM3fQ.ZXzNFV4l4JMYExqyYPzxsF1lwyEeIMOYGgmkxI9puW0',
+    'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJjb25zb2xlIiwib3JnX2lkIjoiZjQ5ZWNkNGMtNTkyMy00Y2M5LWE4NTQtYWFjZGYzNjliOTdlIiwicm9sZXMiOlsicmVhZCIsIndyaXRlIl0sImlhdCI6MTY4MDYxMTU3MCwiZXhwIjoxNzEyMTQ3NTcwfQ.1HeMAiSEJzkA_x06c_Nk4oH_7ckZzNsjlyaO-Kca7R0',
 };
 
 describe('router', () => {
@@ -15,24 +16,28 @@ describe('router', () => {
         bip44Path: 0,
         index: 0,
         isRegistered: false,
+        keychainId: 'keychain-uuid',
       },
     });
     const result = getNextReceiveIndex({
+      accessToken: config.wallets[0].apiKey,
       assetId: 'bitcoin',
       userId: 'asdf',
-      wallet: 0,
+      walletId: 0,
     });
     expect(result).resolves.toEqual({
       bip44Path: 0,
       index: 0,
       isRegistered: false,
+      keychainId: 'keychain-uuid',
     });
     expect(axios.post).toHaveBeenCalledWith(
       `${process.env.MAP3_STORE_API}/api/store/keychain-address/address-index`,
       {
+        accessToken: config.wallets[0].apiKey,
         assetId: 'bitcoin',
         userId: 'asdf',
-        wallet: 0,
+        walletId: 0,
       },
       {
         headers,
@@ -50,9 +55,10 @@ describe('router', () => {
       addressIndex: 0,
       assetId: 'bitcoin',
       bip44Path: 0,
+      keychainId: 'keychain-uuid',
       memo: 'asdf',
       userId: 'asdf',
-      wallet: 0,
+      walletId: 0,
     });
     expect(result).resolves.toEqual({
       status: 'ok',
@@ -64,9 +70,10 @@ describe('router', () => {
         addressIndex: 0,
         assetId: 'bitcoin',
         bip44Path: 0,
+        keychainId: 'keychain-uuid',
         memo: 'asdf',
         userId: 'asdf',
-        wallet: 0,
+        walletId: 0,
       },
       {
         headers,

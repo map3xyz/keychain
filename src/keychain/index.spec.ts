@@ -1,5 +1,6 @@
 import {initWasm} from '@trustwallet/wallet-core';
 
+import config from '../../map3.config.example.json';
 import * as storeApi from '../store-api';
 import {Keychain} from '.';
 
@@ -9,6 +10,7 @@ describe('keychain', () => {
   beforeAll(async () => {
     const tw = await initWasm();
     keychain = new Keychain({
+      config,
       mnemonic: process.env.MNEMONIC!,
       tw,
     });
@@ -20,6 +22,7 @@ describe('keychain', () => {
         addressIndex: 0,
         bip44Path: 0,
         isRegistered: false,
+        keychainId: 'keychain-uuid',
       });
       jest.spyOn(storeApi, 'registerAddress').mockResolvedValueOnce({
         status: 'ok',
@@ -66,6 +69,7 @@ describe('keychain', () => {
         addressIndex: 0,
         bip44Path: 0,
         isRegistered: false,
+        keychainId: 'keychain-uuid',
       });
       jest.spyOn(storeApi, 'registerAddress').mockResolvedValueOnce({
         status: 'ok',
@@ -73,7 +77,7 @@ describe('keychain', () => {
       const {address} = await keychain.getAddress({
         assetId: 'bitcoin',
         userId: 'asdf',
-        wallet: 0,
+        walletId: 0,
       });
 
       expect(address).toBe('bc1qyvlz4t2y9c9ksfd7uu9kfv8rmhhjxvfwrnyqmc');
@@ -83,6 +87,7 @@ describe('keychain', () => {
         addressIndex: 0,
         bip44Path: 60,
         isRegistered: false,
+        keychainId: 'keychain-uuid',
       });
       jest.spyOn(storeApi, 'registerAddress').mockResolvedValueOnce({
         status: 'ok',
@@ -90,7 +95,7 @@ describe('keychain', () => {
       const {address} = await keychain.getAddress({
         assetId: 'ethereum',
         userId: 'asdf',
-        wallet: 0,
+        walletId: 0,
       });
 
       expect(address).toStrictEqual(
@@ -102,6 +107,7 @@ describe('keychain', () => {
         addressIndex: 0,
         bip44Path: 2,
         isRegistered: false,
+        keychainId: 'keychain-uuid',
       });
       jest.spyOn(storeApi, 'registerAddress').mockResolvedValueOnce({
         status: 'ok',
@@ -109,7 +115,7 @@ describe('keychain', () => {
       const {address} = await keychain.getAddress({
         assetId: 'litcoin',
         userId: 'asdf',
-        wallet: 0,
+        walletId: 0,
       });
 
       expect(address).toBe('ltc1qaetzxxme6h7qhwg5lvjff3tagjtdn5gkpnl005');
@@ -119,6 +125,7 @@ describe('keychain', () => {
         addressIndex: 0,
         bip44Path: 2,
         isRegistered: false,
+        keychainId: 'keychain-uuid',
       });
       jest.spyOn(storeApi, 'registerAddress').mockResolvedValueOnce({
         status: 'ok',
@@ -127,7 +134,7 @@ describe('keychain', () => {
       const {address} = await keychain.getAddress({
         assetId: 'litecoin',
         userId: 'asdf',
-        wallet: 0,
+        walletId: 0,
       });
 
       expect(address).toBe('ltc1qaetzxxme6h7qhwg5lvjff3tagjtdn5gkpnl005');
@@ -136,8 +143,9 @@ describe('keychain', () => {
         addressIndex: 0,
         assetId: 'litecoin',
         bip44Path: 2,
+        keychainId: 'keychain-uuid',
         userId: 'asdf',
-        wallet: 0,
+        walletId: 0,
       });
     });
     it('does not return address if registration fails', async () => {
@@ -145,6 +153,7 @@ describe('keychain', () => {
         addressIndex: 0,
         bip44Path: 2,
         isRegistered: false,
+        keychainId: 'keychain-uuid',
       });
       jest.spyOn(storeApi, 'registerAddress').mockResolvedValueOnce({
         error: 'some error',
@@ -154,7 +163,7 @@ describe('keychain', () => {
         keychain.getAddress({
           assetId: 'litecoin',
           userId: 'asdf',
-          wallet: 0,
+          walletId: 0,
         })
       ).rejects.toThrow('Address registration failed');
     });
