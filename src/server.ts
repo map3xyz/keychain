@@ -2,7 +2,7 @@ import {initWasm} from '@trustwallet/wallet-core';
 import express from 'express';
 
 // eslint-disable-next-line node/no-unpublished-import
-import config from '../map3.config.json';
+import config from '../map3.config.example.json';
 import {Keychain} from './keychain';
 import {hmacMiddleware} from './middlewares/hmac';
 import {GetAddressParametersType} from './types';

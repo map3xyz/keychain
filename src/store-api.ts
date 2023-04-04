@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 // eslint-disable-next-line node/no-unpublished-import
-import config from '../map3.config.json';
+import config from '../map3.config.example.json';
 import {
   GetAddressParametersType,
   GetNextReceiveIndexResponseType,
