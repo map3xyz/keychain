@@ -5,8 +5,7 @@ import {getNextReceiveIndex, getUTXOs, registerAddress} from '../src/store-api';
 
 const headers = {
   'Content-Type': 'application/json',
-  authorization:
-    'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJjb25zb2xlIiwib3JnX2lkIjoiZjQ5ZWNkNGMtNTkyMy00Y2M5LWE4NTQtYWFjZGYzNjliOTdlIiwicm9sZXMiOlsicmVhZCIsIndyaXRlIl0sImlhdCI6MTY4MDYxMTU3MCwiZXhwIjoxNzEyMTQ3NTcwfQ.1HeMAiSEJzkA_x06c_Nk4oH_7ckZzNsjlyaO-Kca7R0',
+  authorization: `Bearer ${config.storeApiKey}`,
 };
 
 describe('router', () => {
@@ -16,7 +15,6 @@ describe('router', () => {
         bip44Path: 0,
         index: 0,
         isRegistered: false,
-        keychainId: 'keychain-uuid',
       },
     });
     const result = getNextReceiveIndex({
@@ -29,7 +27,6 @@ describe('router', () => {
       bip44Path: 0,
       index: 0,
       isRegistered: false,
-      keychainId: 'keychain-uuid',
     });
     expect(axios.post).toHaveBeenCalledWith(
       `${process.env.MAP3_STORE_API}/api/store/keychain-address/address-index`,
@@ -55,7 +52,6 @@ describe('router', () => {
       addressIndex: 0,
       assetId: 'bitcoin',
       bip44Path: 0,
-      keychainId: 'keychain-uuid',
       memo: 'asdf',
       userId: 'asdf',
       walletId: 0,
@@ -70,7 +66,6 @@ describe('router', () => {
         addressIndex: 0,
         assetId: 'bitcoin',
         bip44Path: 0,
-        keychainId: 'keychain-uuid',
         memo: 'asdf',
         userId: 'asdf',
         walletId: 0,

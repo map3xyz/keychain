@@ -16,14 +16,12 @@ export type GetNextReceiveIndexResponseType = {
   addressIndex: number;
   bip44Path: number;
   isRegistered: boolean;
-  keychainId: string;
 };
 
 export type RegisterAddressParametersType = GetAddressParametersType & {
   address: string;
   addressIndex: number;
   bip44Path: number;
-  keychainId: string;
   memo?: string;
 };
 

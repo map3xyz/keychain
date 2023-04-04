@@ -22,7 +22,6 @@ describe('keychain', () => {
         addressIndex: 0,
         bip44Path: 0,
         isRegistered: false,
-        keychainId: 'keychain-uuid',
       });
       jest.spyOn(storeApi, 'registerAddress').mockResolvedValueOnce({
         status: 'ok',
@@ -69,7 +68,6 @@ describe('keychain', () => {
         addressIndex: 0,
         bip44Path: 0,
         isRegistered: false,
-        keychainId: 'keychain-uuid',
       });
       jest.spyOn(storeApi, 'registerAddress').mockResolvedValueOnce({
         status: 'ok',
@@ -87,7 +85,6 @@ describe('keychain', () => {
         addressIndex: 0,
         bip44Path: 60,
         isRegistered: false,
-        keychainId: 'keychain-uuid',
       });
       jest.spyOn(storeApi, 'registerAddress').mockResolvedValueOnce({
         status: 'ok',
@@ -107,7 +104,6 @@ describe('keychain', () => {
         addressIndex: 0,
         bip44Path: 2,
         isRegistered: false,
-        keychainId: 'keychain-uuid',
       });
       jest.spyOn(storeApi, 'registerAddress').mockResolvedValueOnce({
         status: 'ok',
@@ -125,7 +121,6 @@ describe('keychain', () => {
         addressIndex: 0,
         bip44Path: 2,
         isRegistered: false,
-        keychainId: 'keychain-uuid',
       });
       jest.spyOn(storeApi, 'registerAddress').mockResolvedValueOnce({
         status: 'ok',
@@ -143,7 +138,6 @@ describe('keychain', () => {
         addressIndex: 0,
         assetId: 'litecoin',
         bip44Path: 2,
-        keychainId: 'keychain-uuid',
         userId: 'asdf',
         walletId: 0,
       });
@@ -153,7 +147,6 @@ describe('keychain', () => {
         addressIndex: 0,
         bip44Path: 2,
         isRegistered: false,
-        keychainId: 'keychain-uuid',
       });
       jest.spyOn(storeApi, 'registerAddress').mockResolvedValueOnce({
         error: 'some error',

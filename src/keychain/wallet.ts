@@ -55,7 +55,7 @@ export class Wallet {
     address: string;
     memo?: string;
   }> => {
-    const {addressIndex, bip44Path, isRegistered, keychainId} =
+    const {addressIndex, bip44Path, isRegistered} =
       await storeAPI.getNextReceiveIndex({...params, accessToken: this.apiKey});
 
     const address = this.deriveAddressFromPath({
@@ -69,7 +69,6 @@ export class Wallet {
         address,
         addressIndex,
         bip44Path,
-        keychainId,
       });
     }
     return {address};
