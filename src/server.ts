@@ -46,8 +46,8 @@ logger.info('Starting server...');
         function: 'getAddress',
         parameters: {
           assetId: '38975bff-987f-4a06-b488-c75177e06914',
-          userId: 'test-user-04',
-          walletId: 1,
+          userId: 'test-user-06',
+          walletId: 0,
         } as GetAddressParametersType,
       };
 
@@ -58,6 +58,7 @@ logger.info('Starting server...');
             res.send({address, memo});
           } catch (e) {
             const error = catcher(e);
+            logger.error(error);
             res.status(500);
             if (error) {
               res.send({error});

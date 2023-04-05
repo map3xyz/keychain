@@ -18,7 +18,6 @@ describe('router', () => {
       },
     });
     const result = getNextReceiveIndex({
-      accessToken: config.wallets[0].apiKey,
       assetId: 'bitcoin',
       userId: 'asdf',
       walletId: 0,
@@ -31,7 +30,6 @@ describe('router', () => {
     expect(axios.post).toHaveBeenCalledWith(
       `${process.env.MAP3_STORE_API}/api/store/keychain-address/address-index`,
       {
-        accessToken: config.wallets[0].apiKey,
         assetId: 'bitcoin',
         userId: 'asdf',
         walletId: 0,

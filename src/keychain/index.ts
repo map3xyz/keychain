@@ -1,14 +1,13 @@
 require('dotenv').config();
 
 import {WalletCore} from '@trustwallet/wallet-core';
-import {HDWallet} from '@trustwallet/wallet-core/dist/src/wallet-core';
 
 import {GetAddressParametersType, SendParametersType} from '../types';
 import {Wallet} from './wallet';
 
 export class Keychain {
   tw: WalletCore;
-  hdwallet: HDWallet;
+  hdwallet: WalletCore['HDWallet']['prototype'];
   wallets: Wallet[];
 
   constructor(args: {

@@ -19,9 +19,7 @@ const headers = {
 };
 
 const getNextReceiveIndex = async (
-  params: GetAddressParametersType & {
-    accessToken: string;
-  }
+  params: GetAddressParametersType
 ): Promise<GetNextReceiveIndexResponseType> => {
   const response: {data: GetNextReceiveIndexResponseType} = await axios.post(
     `${BASE_URL}/address-index`,

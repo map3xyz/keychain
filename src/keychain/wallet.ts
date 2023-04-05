@@ -1,3 +1,4 @@
+import ChainFactory from '../chains';
 import * as storeAPI from '../store-api';
 import {
   GetAddressParametersType,
@@ -28,17 +29,17 @@ export class Wallet {
     addressIndex: number;
     bip44Path: number;
   }) => {
-    const {AnyAddress} = this.#keychain.tw;
     const {addressIndex, bip44Path} = params;
+    const Chain = ChainFactory({bip44Path, tw: this.#keychain.tw});
     const key = this.#keychain.hdwallet.getDerivedKey(
-      {value: bip44Path},
+      Chain.coinType,
       this.walletId,
       0,
       addressIndex
     );
-    const pubKey = key.getPublicKey({value: bip44Path});
-    const address = AnyAddress.createWithPublicKey(pubKey, {value: bip44Path});
-    return address.description();
+    const pubKey = key.getPublicKey(Chain.coinType);
+    const chain = ChainFactory({bip44Path, tw: this.#keychain.tw});
+    return chain.deriveAddress(pubKey);
   };
 
   private registerAddress = async (params: RegisterAddressParametersType) => {
@@ -56,7 +57,7 @@ export class Wallet {
     memo?: string;
   }> => {
     const {addressIndex, bip44Path, isRegistered} =
-      await storeAPI.getNextReceiveIndex({...params, accessToken: this.apiKey});
+      await storeAPI.getNextReceiveIndex(params);
 
     const address = this.deriveAddressFromPath({
       addressIndex,
