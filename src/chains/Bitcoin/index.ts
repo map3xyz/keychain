@@ -71,10 +71,8 @@ class Bitcoin implements Chain {
     const input = TW.Bitcoin.Proto.SigningInput.encode(txInput).finish();
     const txOutput = AnySigner.sign(input, this.coinType);
     const output = TW.Bitcoin.Proto.SigningOutput.decode(txOutput);
-    const data = JSON.stringify(output.toJSON());
-    console.log(HexCoding.encode(output.encoded));
-    console.log(data);
-    return data;
+
+    return HexCoding.encode(output.encoded);
   };
 
   getDerivation = () => {
