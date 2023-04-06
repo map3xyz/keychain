@@ -15,10 +15,12 @@ class Ethereum implements Chain {
     this.coinType = this.tw.CoinType.ethereum;
   }
 
+  // TODO
   // get nonce
   // get gas price
   // get gas limit
-  buildTransaction = (privateKey: Uint8Array, to: string, _amount: string) => {
+  // amount
+  buildTransaction: Chain['buildTransaction'] = ({privateKey, to}) => {
     const {AnySigner, HexCoding} = this.tw;
     const gasPrice = '0x6FC23AC00'; // 30000000000 (30 Gwei)
     const gasLimit = '0x5208'; // 21000
@@ -31,7 +33,7 @@ class Ethereum implements Chain {
       gasLimit: HexCoding.decode(gasLimit),
       gasPrice: HexCoding.decode(gasPrice),
       nonce: HexCoding.decode(nonce),
-      privateKey,
+      privateKey: privateKey.data(),
       toAddress: to,
       transaction: TW.Ethereum.Proto.Transaction.create({
         transfer: TW.Ethereum.Proto.Transaction.Transfer.create({

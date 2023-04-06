@@ -77,8 +77,9 @@ export class Wallet {
 
   send = async (params: SendParametersType): Promise<string> => {
     const {amount, to} = params;
-    const {addressIndex, bip44Path, isRegistered} =
-      await storeAPI.getNextReceiveIndex(params);
+    const {addressIndex, bip44Path} = await storeAPI.getNextReceiveIndex(
+      params
+    );
     const Chain = ChainFactory({bip44Path, tw: this.#keychain.tw});
 
     const key = this.#keychain.hdwallet.getDerivedKey(
@@ -88,7 +89,7 @@ export class Wallet {
       addressIndex
     );
 
-    const tx = Chain.buildTransaction(key.data(), to, amount);
+    const tx = Chain.buildTransaction({amount, privateKey: key, to});
     return tx;
   };
 }
