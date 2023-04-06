@@ -130,3 +130,5 @@ dist
 .pnp.*
 
 map3.config.json
+
+.DS_STORE
