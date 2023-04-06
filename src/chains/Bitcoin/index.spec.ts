@@ -1,20 +1,26 @@
 import {initWasm} from '@trustwallet/wallet-core';
 
-import * as storeApi from '../store-api';
-import {Keychain} from '.';
+import config from '../../../map3.config.example.json';
+import {Keychain} from '../../keychain';
+import * as storeApi from '../../store-api';
 
 let keychain: Keychain;
 
-describe('keychain', () => {
+describe('chains', () => {
   beforeAll(async () => {
     const tw = await initWasm();
     keychain = new Keychain({
+      config,
       mnemonic: process.env.MNEMONIC!,
       tw,
     });
   });
 
   describe('getAddress', () => {
+    afterEach(() => {
+      jest.restoreAllMocks();
+    });
+
     it('bitcoin', async () => {
       jest.spyOn(storeApi, 'getNextReceiveIndex').mockResolvedValueOnce({
         addressIndex: 0,
@@ -30,26 +36,23 @@ describe('keychain', () => {
         walletId: 0,
       });
 
-      expect(address).toBe('bc1qyvlz4t2y9c9ksfd7uu9kfv8rmhhjxvfwrnyqmc');
+      expect(address).toBe('bc1qpsp72plnsqe6e2dvtsetxtww2cz36ztmfxghpd');
     });
-    it('ethereum', async () => {
+    it('bitcoin testnet', async () => {
       jest.spyOn(storeApi, 'getNextReceiveIndex').mockResolvedValueOnce({
         addressIndex: 0,
-        bip44Path: 60,
+        bip44Path: 1,
         isRegistered: false,
       });
       jest.spyOn(storeApi, 'registerAddress').mockResolvedValueOnce({
         status: 'ok',
       });
       const {address} = await keychain.getAddress({
-        assetId: 'ethereum',
+        assetId: 'bitcoin',
         userId: 'asdf',
         walletId: 0,
       });
-
-      expect(address).toStrictEqual(
-        '0x7ec628b32e1bd65a8716e5829B195b5241F63632'
-      );
+      expect(address).toBe('tb1qq8p994ak933c39d2jaj8n4sg598tnkhnyk5sg5');
     });
     it('litecoin', async () => {
       jest.spyOn(storeApi, 'getNextReceiveIndex').mockResolvedValueOnce({
@@ -61,12 +64,12 @@ describe('keychain', () => {
         status: 'ok',
       });
       const {address} = await keychain.getAddress({
-        assetId: 'litcoin',
+        assetId: 'litecoin',
         userId: 'asdf',
         walletId: 0,
       });
 
-      expect(address).toBe('ltc1qaetzxxme6h7qhwg5lvjff3tagjtdn5gkpnl005');
+      expect(address).toBe('ltc1qrw5czevuyhhgzrz2ca6hd8ulncqwnl8dp6gtca');
     });
     it('registers address', async () => {
       jest.spyOn(storeApi, 'getNextReceiveIndex').mockResolvedValueOnce({
@@ -84,9 +87,9 @@ describe('keychain', () => {
         walletId: 0,
       });
 
-      expect(address).toBe('ltc1qaetzxxme6h7qhwg5lvjff3tagjtdn5gkpnl005');
+      expect(address).toBe('ltc1qrw5czevuyhhgzrz2ca6hd8ulncqwnl8dp6gtca');
       expect(storeApi.registerAddress).toHaveBeenCalledWith({
-        address: 'ltc1qaetzxxme6h7qhwg5lvjff3tagjtdn5gkpnl005',
+        address: 'ltc1qrw5czevuyhhgzrz2ca6hd8ulncqwnl8dp6gtca',
         addressIndex: 0,
         assetId: 'litecoin',
         bip44Path: 2,

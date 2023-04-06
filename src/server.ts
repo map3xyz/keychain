@@ -1,9 +1,11 @@
 import {initWasm} from '@trustwallet/wallet-core';
-import * as express from 'express';
+import express from 'express';
 
+// eslint-disable-next-line node/no-unpublished-import
+import config from '../map3.config.example.json';
 import {Keychain} from './keychain';
 import {hmacMiddleware} from './middlewares/hmac';
-import {GetAddressParametersType} from './types';
+import {GetAddressParametersType, SendParametersType} from './types';
 import {catcher} from './utils/catcher';
 import {logger} from './utils/logger';
 
@@ -21,8 +23,8 @@ logger.info('Starting server...');
     if (process.env.MNEMONIC.split(' ').length !== 24) {
       throw new Error('MNEMONIC must be 24 words');
     }
-    if (!process.env.MAP3_STORE_API_KEY) {
-      throw new Error('MAP3_STORE_API_KEY is required');
+    if (!config.storeApiKey) {
+      throw new Error('storeApiKey is required');
     }
 
     const tw = await initWasm();
@@ -33,28 +35,41 @@ logger.info('Starting server...');
     }
 
     const keychain = new Keychain({
+      config,
       mnemonic: process.env.MNEMONIC,
       tw,
     });
 
     app.post('/', async (req, res) => {
-      // hmac stuff
-      const data = {
+      const fn = 'send' as string;
+      const data_getAddress = {
         function: 'getAddress',
         parameters: {
-          assetId: '38975bff-987f-4a06-b488-c75177e06914',
-          userId: 'test-user-03',
+          assetId: '55b0c6c4-b817-4eeb-a2d2-da713d5a9674',
+          userId: 'test-user-06',
           walletId: 0,
         } as GetAddressParametersType,
       };
+      const data_send = {
+        function: 'send',
+        parameters: {
+          assetId: '55b0c6c4-b817-4eeb-a2d2-da713d5a9674',
+          to: 'tb1q5tjzphlnyhdltv7v9mw2hjyqk7zdzl49z8c7xd',
+          userId: 'test-user-06',
+          walletId: 0,
+        } as SendParametersType,
+      };
 
-      switch (data.function) {
+      switch (fn) {
         case 'getAddress': {
           try {
-            const {address, memo} = await keychain.getAddress(data.parameters);
+            const {address, memo} = await keychain.getAddress(
+              data_getAddress.parameters
+            );
             res.send({address, memo});
           } catch (e) {
             const error = catcher(e);
+            logger.error(error);
             res.status(500);
             if (error) {
               res.send({error});
@@ -64,6 +79,23 @@ logger.info('Starting server...');
           }
           break;
         }
+        case 'send':
+          {
+            try {
+              const result = await keychain.send(data_send.parameters);
+              res.send(result);
+            } catch (e) {
+              const error = catcher(e);
+              logger.error(error);
+              res.status(500);
+              if (error) {
+                res.send({error});
+              } else {
+                res.send('Unknown error');
+              }
+            }
+          }
+          break;
         default:
           res.send('Invalid function');
       }

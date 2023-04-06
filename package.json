@@ -2,15 +2,14 @@
   "name": "wallet-api-poc-ts",
   "version": "0.0.1",
   "description": "",
-  "main": "dist/app.js",
   "scripts": {
-    "dev": "nodemon dist/server.js",
+    "dev": "nodemon dist/src/server.js",
     "lint": "gts lint",
     "clean": "gts clean",
     "compile": "tsc",
     "fix": "gts fix",
     "prepare": "npm run compile",
-    "start": "node dist/server.js",
+    "start": "node dist/src/server.js",
     "test": "DOTENV_CONFIG_PATH=.env.test jest",
     "watch": "tsc -w"
   },

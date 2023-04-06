@@ -1,0 +1,15 @@
+{
+  "storeApiKey": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJjb25zb2xlIiwib3JnX2lkIjoiZjQ5ZWNkNGMtNTkyMy00Y2M5LWE4NTQtYWFjZGYzNjliOTdlIiwicm9sZXMiOlsia2V5Y2hhaW4iXSwiaWF0IjoxNjgwNjQ5MDY0LCJleHAiOjE3MTIxODUwNjR9.HeFBKIxFOOliySCthXREpjg62G8YXr_AbGEeKPP1daI",
+  "wallets": [
+    {
+      "id": 0,
+      "apiKey": "asdf",
+      "name": "exchange"
+    },
+    {
+      "id": 1,
+      "apiKey": "asdf1",
+      "name": "exchange1"
+    }
+  ]
+}
