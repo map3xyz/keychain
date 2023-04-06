@@ -92,8 +92,9 @@ describe('router', () => {
       ],
     });
     const result = getUTXOs({
-      amount: 1000,
+      amount: '1000',
       assetId: 'bitcoin',
+      to: '1GVb4mfQrvymPLz7zeZ3LnQ8sFv3NedZXe',
       userId: 'asdf',
       walletId: 0,
     });
@@ -116,8 +117,9 @@ describe('router', () => {
     expect(axios.post).toHaveBeenCalledWith(
       `${process.env.MAP3_STORE_API}/api/store/keychain-address/utxos`,
       {
-        amount: 1000,
+        amount: '1000',
         assetId: 'bitcoin',
+        to: '1GVb4mfQrvymPLz7zeZ3LnQ8sFv3NedZXe',
         userId: 'asdf',
         walletId: 0,
       },

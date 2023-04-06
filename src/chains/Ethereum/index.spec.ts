@@ -6,7 +6,7 @@ import * as storeApi from '../../store-api';
 
 let keychain: Keychain;
 
-describe('keychain', () => {
+describe('chains', () => {
   beforeAll(async () => {
     const tw = await initWasm();
     keychain = new Keychain({

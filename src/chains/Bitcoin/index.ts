@@ -21,6 +21,12 @@ class Bitcoin implements Chain {
     }
   }
 
+  // get UTXOs
+  // get fee
+  buildTransaction = (from: Uint8Array, to: string, amount: string) => {
+    return 'tx';
+  };
+
   getDerivation = () => {
     const {Derivation} = this.tw;
     switch (this.bip44Path) {

@@ -18,6 +18,7 @@ const headers = {
   authorization: `Bearer ${config.storeApiKey}`,
 };
 
+// rename to getUserAddressIndex?
 const getNextReceiveIndex = async (
   params: GetAddressParametersType
 ): Promise<GetNextReceiveIndexResponseType> => {

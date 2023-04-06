@@ -75,12 +75,20 @@ export class Wallet {
     return {address};
   };
 
-  send = async (
-    params: SendParametersType
-  ): Promise<{
-    txId: string;
-  }> => {
-    const utxos = await storeAPI.getUTXOs(params);
-    return {txId: 'txId'};
+  send = async (params: SendParametersType): Promise<string> => {
+    const {amount, to} = params;
+    const {addressIndex, bip44Path, isRegistered} =
+      await storeAPI.getNextReceiveIndex(params);
+    const Chain = ChainFactory({bip44Path, tw: this.#keychain.tw});
+
+    const key = this.#keychain.hdwallet.getDerivedKey(
+      Chain.coinType,
+      this.walletId,
+      0,
+      addressIndex
+    );
+
+    const tx = Chain.buildTransaction(key.data(), to, amount);
+    return tx;
   };
 }

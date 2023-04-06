@@ -4,12 +4,10 @@ export type GetAddressParametersType = {
   walletId: number;
 };
 
-export type SendParametersType = {
-  amount: number;
-  assetId: string;
+export type SendParametersType = GetAddressParametersType & {
+  amount: string;
   memo?: string;
-  userId: string;
-  walletId: number;
+  to: string;
 };
 
 export type GetNextReceiveIndexResponseType = {

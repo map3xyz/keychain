@@ -5,7 +5,7 @@ import express from 'express';
 import config from '../map3.config.example.json';
 import {Keychain} from './keychain';
 import {hmacMiddleware} from './middlewares/hmac';
-import {GetAddressParametersType} from './types';
+import {GetAddressParametersType, SendParametersType} from './types';
 import {catcher} from './utils/catcher';
 import {logger} from './utils/logger';
 
@@ -41,14 +41,22 @@ logger.info('Starting server...');
     });
 
     app.post('/', async (req, res) => {
-      // hmac stuff
+      // const data = {
+      //   function: 'getAddress',
+      //   parameters: {
+      //     assetId: '38975bff-987f-4a06-b488-c75177e06914',
+      //     userId: 'test-user-06',
+      //     walletId: 0,
+      //   } as GetAddressParametersType,
+      // };
       const data = {
-        function: 'getAddress',
+        function: 'send',
         parameters: {
           assetId: '38975bff-987f-4a06-b488-c75177e06914',
+          to: '0x72a63354B746bFF4161A2583C184D64b411cfBBF',
           userId: 'test-user-06',
           walletId: 0,
-        } as GetAddressParametersType,
+        } as SendParametersType,
       };
 
       switch (data.function) {
@@ -68,6 +76,23 @@ logger.info('Starting server...');
           }
           break;
         }
+        case 'send':
+          {
+            try {
+              const result = await keychain.send(data.parameters);
+              res.send(result);
+            } catch (e) {
+              const error = catcher(e);
+              logger.error(error);
+              res.status(500);
+              if (error) {
+                res.send({error});
+              } else {
+                res.send('Unknown error');
+              }
+            }
+          }
+          break;
         default:
           res.send('Invalid function');
       }
