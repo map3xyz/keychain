@@ -1,5 +1,4 @@
 import {TW, WalletCore} from '@trustwallet/wallet-core';
-import {EthereumMessageSigner} from '@trustwallet/wallet-core/dist/src/wallet-core';
 
 import Chain from '../types';
 
