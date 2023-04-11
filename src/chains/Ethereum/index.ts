@@ -19,7 +19,7 @@ class Ethereum implements Chain {
   // get gas price
   // get gas limit
   // amount
-  buildTransaction: Chain['buildTransaction'] = ({privateKey, to}) => {
+  buildTransaction: Chain['buildTransaction'] = async ({privateKey, to}) => {
     const {AnySigner, HexCoding} = this.tw;
     const gasPrice = '0x6FC23AC00'; // 30000000000 (30 Gwei)
     const gasLimit = '0x5208'; // 21000

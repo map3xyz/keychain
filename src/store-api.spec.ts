@@ -1,5 +1,6 @@
 import axios from 'axios';
 
+import {utxos} from '../__mocks__';
 import config from '../map3.config.example.json';
 import {getNextReceiveIndex, getUTXOs, registerAddress} from '../src/store-api';
 
@@ -75,53 +76,33 @@ describe('router', () => {
   });
   it('getUTXOs', () => {
     jest.spyOn(axios, 'post').mockResolvedValueOnce({
-      data: [
-        {
-          block_height: 302013,
-          confirmations: 63066,
-          confirmed: '2014-05-22T03:46:25Z',
-          double_spend: false,
-          ref_balance: 4433416,
-          spent: false,
-          tx_hash:
-            '14b1052855bbf6561bc4db8aa501762e7cc1e86994dda9e782a6b73b1ce0dc1e',
-          tx_input_n: -1,
-          tx_output_n: 0,
-          value: 20213,
-        },
-      ],
+      data: utxos,
     });
     const result = getUTXOs({
-      amount: '1000',
+      address: 'bc1qpsp72plnsqe6e2dvtsetxtww2cz36ztmfxghpd',
       assetId: 'bitcoin',
-      to: '1GVb4mfQrvymPLz7zeZ3LnQ8sFv3NedZXe',
-      userId: 'asdf',
-      walletId: 0,
     });
 
     expect(result).resolves.toEqual([
       {
-        block_height: 302013,
-        confirmations: 63066,
-        confirmed: '2014-05-22T03:46:25Z',
+        block_height: 2427702,
+        confirmations: 832,
+        confirmed: '2023-04-06T18:09:22Z',
         double_spend: false,
-        ref_balance: 4433416,
+        ref_balance: 1544819,
         spent: false,
         tx_hash:
-          '14b1052855bbf6561bc4db8aa501762e7cc1e86994dda9e782a6b73b1ce0dc1e',
+          '896a3ccf29d7ced5b2b490d64e74ee9057f2f82bab60d8131cb3ad5c0626275e',
         tx_input_n: -1,
-        tx_output_n: 0,
-        value: 20213,
+        tx_output_n: 1,
+        value: 1544819,
       },
     ]);
     expect(axios.post).toHaveBeenCalledWith(
       `${process.env.MAP3_STORE_API}/api/store/keychain-address/utxos`,
       {
-        amount: '1000',
+        address: 'bc1qpsp72plnsqe6e2dvtsetxtww2cz36ztmfxghpd',
         assetId: 'bitcoin',
-        to: '1GVb4mfQrvymPLz7zeZ3LnQ8sFv3NedZXe',
-        userId: 'asdf',
-        walletId: 0,
       },
       {
         headers,

@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 import {initWasm} from '@trustwallet/wallet-core';
 import express from 'express';
 
@@ -116,3 +117,16 @@ logger.info('Starting server...');
     logger.error(error);
   }
 })();
+=======
+import express from 'express';
+
+const app = express();
+
+const PORT = process.env.PORT || 4000;
+
+app.get('/', (req, res) => res.send('Hello from server!'));
+
+app.listen(PORT, () =>
+  console.log(`⚡Server is running here 👉 https://localhost:${PORT}`)
+);
+>>>>>>> Stashed changes

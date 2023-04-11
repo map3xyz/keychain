@@ -1,5 +1,6 @@
 import {initWasm} from '@trustwallet/wallet-core';
 
+import {utxos} from '../../../__mocks__';
 import config from '../../../map3.config.example.json';
 import {Keychain} from '../../keychain';
 import * as storeApi from '../../store-api';
@@ -126,6 +127,7 @@ describe('chains', () => {
         bip44Path: 1,
         isRegistered: false,
       });
+      jest.spyOn(storeApi, 'getUTXOs').mockResolvedValueOnce(utxos);
 
       const tx = await keychain.send({
         amount: '546',

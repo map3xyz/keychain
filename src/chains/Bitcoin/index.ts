@@ -1,5 +1,6 @@
 import {TW, WalletCore} from '@trustwallet/wallet-core';
 
+import * as storeApi from '../../store-api';
 import Chain from '../types';
 
 class Bitcoin implements Chain {
@@ -21,31 +22,22 @@ class Bitcoin implements Chain {
     }
   }
 
-  // get UTXOs
   // get fee
-  buildTransaction: Chain['buildTransaction'] = ({amount, privateKey, to}) => {
+  buildTransaction: Chain['buildTransaction'] = async ({
+    amount,
+    assetId,
+    privateKey,
+    to,
+  }) => {
     const {AnySigner, BitcoinScript, HexCoding} = this.tw;
 
-    const utxos = [
-      {
-        block_height: 2427702,
-        confirmations: 5,
-        confirmed: '2023-04-06T18:09:22Z',
-        double_spend: false,
-        ref_balance: 1544819,
-        spent: false,
-        tx_hash:
-          '896a3ccf29d7ced5b2b490d64e74ee9057f2f82bab60d8131cb3ad5c0626275e',
-        tx_input_n: -1,
-        tx_output_n: 1,
-        value: 1544819,
-      },
-    ];
     const pubKey = privateKey.getPublicKey(this.coinType);
     const from = this.deriveAddress(pubKey);
 
+    const utxos = await storeApi.getUTXOs({address: from, assetId});
+
     const txInput = TW.Bitcoin.Proto.SigningInput.create({
-      amount: 546,
+      amount,
       byteFee: 1,
       changeAddress: from,
       coinType: this.coinType.value,

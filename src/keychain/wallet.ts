@@ -76,7 +76,7 @@ export class Wallet {
   };
 
   send = async (params: SendParametersType): Promise<string> => {
-    const {amount, to} = params;
+    const {amount, assetId, to} = params;
     const {addressIndex, bip44Path} = await storeAPI.getNextReceiveIndex(
       params
     );
@@ -89,7 +89,12 @@ export class Wallet {
       addressIndex
     );
 
-    const tx = Chain.buildTransaction({amount, privateKey: key, to});
+    const tx = await Chain.buildTransaction({
+      amount,
+      assetId,
+      privateKey: key,
+      to,
+    });
     return tx;
   };
 }

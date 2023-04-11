@@ -4,10 +4,11 @@ interface Chain {
   bip44Path: number;
   buildTransaction: (params: {
     amount: string;
+    assetId: string;
     change?: string;
     privateKey: WalletCore['PrivateKey']['prototype'];
     to: string;
-  }) => string;
+  }) => Promise<string>;
   coinType: WalletCore['CoinType']['bitcoin'];
   deriveAddress: (publicKey: WalletCore['PublicKey']['prototype']) => string;
 }

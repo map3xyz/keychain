@@ -5,10 +5,10 @@ import config from '../map3.config.example.json';
 import {
   GetAddressParametersType,
   GetNextReceiveIndexResponseType,
+  GetUTXOsParametersType,
   GetUTXOsResponseType,
   RegisterAddressParametersType,
   RegisterAddressResponseType,
-  SendParametersType,
 } from './types';
 
 const BASE_URL = `${process.env.MAP3_STORE_API}/api/store/keychain-address`;
@@ -50,7 +50,7 @@ const registerAddress = async (
 };
 
 const getUTXOs = async (
-  params: SendParametersType
+  params: GetUTXOsParametersType
 ): Promise<GetUTXOsResponseType> => {
   const response: {data: GetUTXOsResponseType} = await axios.post(
     `${BASE_URL}/utxos`,

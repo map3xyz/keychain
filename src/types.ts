@@ -10,6 +10,11 @@ export type SendParametersType = GetAddressParametersType & {
   to: string;
 };
 
+export type GetUTXOsParametersType = {
+  address: string;
+  assetId: string;
+};
+
 export type GetNextReceiveIndexResponseType = {
   addressIndex: number;
   bip44Path: number;
@@ -34,7 +39,8 @@ export type GetUTXOsResponseType = {
   confirmed: string;
   double_spend: boolean;
   ref_balance: number;
-  spent: false;
+  spent: boolean;
+  spent_by?: string;
   tx_hash: string;
   tx_input_n: number;
   tx_output_n: number;
