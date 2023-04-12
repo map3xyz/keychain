@@ -22,7 +22,6 @@ class Bitcoin implements Chain {
     }
   }
 
-  // get fee
   buildTransaction: Chain['buildTransaction'] = async ({
     amount,
     assetId,
@@ -34,11 +33,12 @@ class Bitcoin implements Chain {
     const pubKey = privateKey.getPublicKey(this.coinType);
     const from = this.deriveAddress(pubKey);
 
+    const fees = await storeApi.getFees({assetId});
     const utxos = await storeApi.getUTXOs({address: from, assetId});
 
     const txInput = TW.Bitcoin.Proto.SigningInput.create({
       amount,
-      byteFee: 1,
+      byteFee: fees.high,
       changeAddress: from,
       coinType: this.coinType.value,
       hashType: BitcoinScript.hashTypeForCoin(this.coinType),

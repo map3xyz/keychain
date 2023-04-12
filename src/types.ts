@@ -15,6 +15,10 @@ export type GetUTXOsParametersType = {
   assetId: string;
 };
 
+export type GetFeeParametersType = {
+  assetId: string;
+};
+
 export type GetNextReceiveIndexResponseType = {
   addressIndex: number;
   bip44Path: number;
@@ -46,3 +50,9 @@ export type GetUTXOsResponseType = {
   tx_output_n: number;
   value: number;
 }[];
+
+export type GetFeeResponseType = {
+  high: number;
+  low: number;
+  medium: number;
+};

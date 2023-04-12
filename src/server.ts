@@ -53,6 +53,7 @@ logger.info('Starting server...');
       const data_send = {
         function: 'send',
         parameters: {
+          amount: '546',
           assetId: '55b0c6c4-b817-4eeb-a2d2-da713d5a9674',
           to: 'tb1q5tjzphlnyhdltv7v9mw2hjyqk7zdzl49z8c7xd',
           userId: 'test-user-06',

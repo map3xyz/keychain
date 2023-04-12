@@ -4,6 +4,8 @@ import axios from 'axios';
 import config from '../map3.config.example.json';
 import {
   GetAddressParametersType,
+  GetFeeParametersType,
+  GetFeeResponseType,
   GetNextReceiveIndexResponseType,
   GetUTXOsParametersType,
   GetUTXOsResponseType,
@@ -11,7 +13,7 @@ import {
   RegisterAddressResponseType,
 } from './types';
 
-const BASE_URL = `${process.env.MAP3_STORE_API}/api/store/keychain-address`;
+const BASE_URL = `${process.env.MAP3_STORE_API}/api/store`;
 
 const headers = {
   'Content-Type': 'application/json',
@@ -23,7 +25,7 @@ const getNextReceiveIndex = async (
   params: GetAddressParametersType
 ): Promise<GetNextReceiveIndexResponseType> => {
   const response: {data: GetNextReceiveIndexResponseType} = await axios.post(
-    `${BASE_URL}/address-index`,
+    `${BASE_URL}/keychain-address/address-index`,
     params,
     {
       headers,
@@ -38,7 +40,7 @@ const registerAddress = async (
   params: RegisterAddressParametersType
 ): Promise<RegisterAddressResponseType> => {
   const response: {data: RegisterAddressResponseType} = await axios.post(
-    `${BASE_URL}/register-address`,
+    `${BASE_URL}/keychain-address/register-address`,
     params,
     {
       headers,
@@ -53,7 +55,7 @@ const getUTXOs = async (
   params: GetUTXOsParametersType
 ): Promise<GetUTXOsResponseType> => {
   const response: {data: GetUTXOsResponseType} = await axios.post(
-    `${BASE_URL}/utxos`,
+    `${BASE_URL}/keychain-address/utxos`,
     params,
     {
       headers,
@@ -64,4 +66,15 @@ const getUTXOs = async (
   return data;
 };
 
-export {getNextReceiveIndex, getUTXOs, registerAddress};
+const getFees = async (
+  params: GetFeeParametersType
+): Promise<GetFeeResponseType> => {
+  const response = await axios.post(`${BASE_URL}/fees`, params, {
+    headers,
+  });
+
+  const {data} = response;
+  return data;
+};
+
+export {getFees, getNextReceiveIndex, getUTXOs, registerAddress};

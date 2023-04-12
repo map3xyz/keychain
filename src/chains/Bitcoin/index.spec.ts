@@ -128,6 +128,11 @@ describe('chains', () => {
         isRegistered: false,
       });
       jest.spyOn(storeApi, 'getUTXOs').mockResolvedValueOnce(utxos);
+      jest.spyOn(storeApi, 'getFees').mockResolvedValueOnce({
+        high: 1,
+        low: 0,
+        medium: 1,
+      });
 
       const tx = await keychain.send({
         amount: '546',

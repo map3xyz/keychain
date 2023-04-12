@@ -2,7 +2,12 @@ import axios from 'axios';
 
 import {utxos} from '../__mocks__';
 import config from '../map3.config.example.json';
-import {getNextReceiveIndex, getUTXOs, registerAddress} from '../src/store-api';
+import {
+  getFees,
+  getNextReceiveIndex,
+  getUTXOs,
+  registerAddress,
+} from '../src/store-api';
 
 const headers = {
   'Content-Type': 'application/json',
@@ -102,6 +107,24 @@ describe('router', () => {
       `${process.env.MAP3_STORE_API}/api/store/keychain-address/utxos`,
       {
         address: 'bc1qpsp72plnsqe6e2dvtsetxtww2cz36ztmfxghpd',
+        assetId: 'bitcoin',
+      },
+      {
+        headers,
+      }
+    );
+  });
+  it('getFees', () => {
+    jest.spyOn(axios, 'post').mockResolvedValueOnce({
+      data: {high: 20, low: 1, medium: 10},
+    });
+    const result = getFees({
+      assetId: 'bitcoin',
+    });
+    expect(result).resolves.toEqual({high: 20, low: 1, medium: 10});
+    expect(axios.post).toHaveBeenCalledWith(
+      `${process.env.MAP3_STORE_API}/api/store/fees`,
+      {
         assetId: 'bitcoin',
       },
       {
